@@ -1,0 +1,1321 @@
+body {
+        background-color: white; /* Ensure the iframe has a white background */
+      }
+      /* ============ RESET & BASE ============ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #0a0a0a;
+        color: #e8e8e8;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: inherit;
+      }
+
+      /* ============ VARIABLES ============ */
+      :root {
+        --kawasaki: #69be28;
+        --kawasaki-dark: #4a8a1c;
+        --cream: #f5f1e8;
+        --dark: #0a0a0a;
+        --dark-2: #141414;
+        --dark-3: #1f1f1f;
+        --gray: #8a8a8a;
+        --border: rgba(255, 255, 255, 0.08);
+        --glow: 0 0 40px rgba(105, 190, 40, 0.3);
+      }
+
+      /* ============ SCROLLBAR ============ */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--kawasaki);
+        border-radius: 4px;
+      }
+
+      /* ============ NAVIGATION ============ */
+      .nav {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 1000;
+        padding: 12px 0;
+        transition: background 0.25s ease, padding 0.25s ease, border-color 0.25s ease;
+        background: linear-gradient(180deg, rgba(10, 10, 10, 0.84), transparent);
+      }
+      .nav.scrolled {
+        background: rgba(10, 10, 10, 0.94);
+        backdrop-filter: blur(18px);
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 4vw, 48px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        line-height: 0;
+      }
+      .nav-brand .nav-logo {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+      }
+      .nav-links {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .nav-links a {
+        padding: 9px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        white-space: nowrap;
+        transition: all 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--kawasaki);
+        background: rgba(105, 190, 40, 0.08);
+      }
+      .nav-cta {
+        background: var(--kawasaki) !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+        padding: 10px 20px !important;
+      }
+      .nav-cta:hover {
+        background: #fff !important;
+        transform: translateY(-2px);
+      }
+      .hamburger {
+        display: none;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+      .hamburger span {
+        display: block;
+        height: 2px;
+        background: #fff;
+        transition: all 0.3s;
+        border-radius: 2px;
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 120px 24px 80px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 20% 50%,
+            rgba(105, 190, 40, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 20%,
+            rgba(105, 190, 40, 0.08) 0%,
+            transparent 50%
+          ),
+          linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+      }
+      .hero-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(105, 190, 40, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(105, 190, 40, 0.05) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          #000 40%,
+          transparent 70%
+        );
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1280px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .hero-text .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(105, 190, 40, 0.1);
+        border: 1px solid rgba(105, 190, 40, 0.3);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--kawasaki);
+        margin-bottom: 24px;
+        letter-spacing: 1px;
+      }
+      .hero-text .badge .dot {
+        width: 6px;
+        height: 6px;
+        background: var(--kawasaki);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .hero-text h1 {
+        font-size: clamp(36px, 5vw, 64px);
+        font-weight: 800;
+        line-height: 1.05;
+        margin-bottom: 20px;
+        letter-spacing: -1px;
+      }
+      .hero-text h1 .accent {
+        color: var(--kawasaki);
+        display: block;
+      }
+      .hero-text .tagline {
+        font-size: clamp(14px, 1.5vw, 18px);
+        color: var(--gray);
+        margin-bottom: 32px;
+        max-width: 500px;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.5px;
+      }
+      .btn-primary {
+        background: var(--kawasaki);
+        color: #000;
+      }
+      .btn-primary:hover {
+        background: #fff;
+        transform: translateY(-3px);
+        box-shadow: var(--glow);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: #fff;
+      }
+      .btn-outline:hover {
+        border-color: var(--kawasaki);
+        color: var(--kawasaki);
+      }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid var(--border);
+      }
+      .stat .num {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--kawasaki);
+      }
+      .stat .label {
+        font-size: 12px;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .hero-visual {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .logo-ring {
+        width: min(480px, 90vw);
+        aspect-ratio: 1;
+        position: relative;
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .logo-ring::before {
+        content: "";
+        position: absolute;
+        inset: -20px;
+        border: 1px solid rgba(105, 190, 40, 0.2);
+        border-radius: 50%;
+        animation: spin 30s linear infinite;
+      }
+      .logo-ring::after {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        border: 1px dashed rgba(105, 190, 40, 0.1);
+        border-radius: 50%;
+        animation: spin 50s linear infinite reverse;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .logo-ring img {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 20px 60px rgba(105, 190, 40, 0.3));
+      }
+
+      /* ============ SECTIONS ============ */
+      section {
+        padding: 100px 24px;
+        position: relative;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .section-header .kicker {
+        display: inline-block;
+        color: var(--kawasaki);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .section-header h2 {
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 16px;
+        letter-spacing: -1px;
+      }
+      .section-header p {
+        color: var(--gray);
+        max-width: 600px;
+        margin: 0 auto;
+        font-size: 16px;
+      }
+
+      /* ============ ABOUT ============ */
+      .about {
+        background: var(--dark-2);
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .about-img {
+        position: relative;
+        aspect-ratio: 4/5;
+        border-radius: 16px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--dark-3), var(--dark));
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+      .about-img > img {
+        width: 100%;
+        height: 100%;
+        max-width: 400px;
+      }
+      .about-img .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          transparent 50%,
+          rgba(0, 0, 0, 0.8)
+        );
+      }
+      .about-img .badge-overlay {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .about-img .badge-overlay img {
+        width: 60px;
+        height: 60px;
+      }
+      .about-img .badge-overlay .t {
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .about-img .badge-overlay .s {
+        font-size: 11px;
+        color: var(--kawasaki);
+        letter-spacing: 1px;
+      }
+      .about-text h2 {
+        font-size: clamp(28px, 3.5vw, 42px);
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.1;
+      }
+      .about-text h2 .accent {
+        color: var(--kawasaki);
+      }
+      .about-text p {
+        color: var(--gray);
+        margin-bottom: 24px;
+      }
+      .pillars {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 32px;
+      }
+      .pillar {
+        padding: 20px;
+        border-radius: 12px;
+        background: var(--dark-3);
+        border: 1px solid var(--border);
+        transition: all 0.3s;
+      }
+      .pillar:hover {
+        border-color: var(--kawasaki);
+        transform: translateY(-4px);
+      }
+      .pillar i {
+        font-size: 24px;
+        color: var(--kawasaki);
+        margin-bottom: 12px;
+      }
+      .pillar h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .pillar p {
+        font-size: 12px;
+        color: var(--gray);
+        margin: 0;
+      }
+
+      /* ============ BIKES ============ */
+      .bikes-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .bike-card {
+        background: linear-gradient(145deg, var(--dark-2), var(--dark-3));
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s;
+      }
+      .bike-card:hover {
+        border-color: var(--kawasaki);
+        transform: translateY(-8px);
+      }
+      .bike-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(105, 190, 40, 0.15),
+          transparent 70%
+        );
+      }
+      .bike-card .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 4px;
+        background: var(--kawasaki);
+        color: #000;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+      }
+      .bike-card h3 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .bike-card .engine {
+        color: var(--kawasaki);
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .bike-card .desc {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 24px;
+        min-height: 48px;
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .spec {
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .spec .v {
+        font-size: 16px;
+        font-weight: 800;
+        color: #fff;
+      }
+      .spec .l {
+        font-size: 10px;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .bike-card .use-case {
+        padding: 12px 16px;
+        border-radius: 8px;
+        background: rgba(105, 190, 40, 0.08);
+        border: 1px solid rgba(105, 190, 40, 0.2);
+        font-size: 13px;
+        color: var(--kawasaki);
+        font-weight: 600;
+      }
+
+      /* ============ EVENTS ============ */
+      .events {
+        background: var(--dark-2);
+      }
+      .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .event-card {
+        background: var(--dark-3);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.4s;
+        position: relative;
+      }
+      .event-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--kawasaki);
+      }
+      .event-header {
+        padding: 20px 24px;
+        background: linear-gradient(
+          135deg,
+          rgba(105, 190, 40, 0.15),
+          rgba(105, 190, 40, 0.05)
+        );
+        border-bottom: 1px solid var(--border);
+      }
+      .event-type {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--kawasaki);
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+      }
+      .event-header h3 {
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.3;
+      }
+      .event-body {
+        padding: 24px;
+      }
+      .event-body p {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 20px;
+        min-height: 48px;
+      }
+      .event-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .event-meta .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+      }
+      .event-meta .row i {
+        color: var(--kawasaki);
+        width: 16px;
+      }
+      .event-meta .row strong {
+        color: #fff;
+      }
+      .event-card .btn-book {
+        width: 100%;
+        padding: 12px;
+        background: var(--kawasaki);
+        color: #000;
+        font-weight: 700;
+        font-size: 13px;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+      .event-card .btn-book:hover {
+        background: #fff;
+      }
+
+      /* ============ GALLERY LINK SECTION ============ */
+      .gallery-link {
+        background: var(--dark-2);
+      }
+      .gallery-cta {
+        display: block;
+        max-width: 900px;
+        margin: 0 auto;
+        background: linear-gradient(145deg, var(--dark-3), var(--dark));
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+      .gallery-cta::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(105, 190, 40, 0.15),
+          transparent 70%
+        );
+      }
+      .gallery-cta:hover {
+        border-color: var(--kawasaki);
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px rgba(105, 190, 40, 0.15);
+      }
+      .gallery-cta-inner {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 24px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .gallery-cta-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--kawasaki),
+          var(--kawasaki-dark)
+        );
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: #000;
+        flex-shrink: 0;
+      }
+      .gallery-cta-content h3 {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+      .gallery-cta-content p {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .gallery-cta-content p strong {
+        color: var(--kawasaki);
+      }
+      .gallery-cta-tags {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .gallery-cta-tags span {
+        padding: 6px 12px;
+        background: rgba(105, 190, 40, 0.1);
+        border: 1px solid rgba(105, 190, 40, 0.25);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--kawasaki);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .gallery-cta-arrow {
+        width: 56px;
+        height: 56px;
+        background: var(--kawasaki);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #000;
+        flex-shrink: 0;
+        transition: all 0.3s;
+      }
+      .gallery-cta:hover .gallery-cta-arrow {
+        background: #fff;
+        transform: translateX(6px);
+      }
+
+      /* ============ CLO ============ */
+      .clo {
+        background: var(--dark-2);
+      }
+      .clo-card {
+        background: linear-gradient(145deg, var(--dark-3), var(--dark));
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 48px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 32px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .clo-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(105, 190, 40, 0.15),
+          transparent 70%
+        );
+      }
+      .clo-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--kawasaki),
+          var(--kawasaki-dark)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 800;
+        color: #000;
+        position: relative;
+        z-index: 1;
+      }
+      .clo-info {
+        position: relative;
+        z-index: 1;
+      }
+      .clo-info .role {
+        color: var(--kawasaki);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+      }
+      .clo-info h3 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .clo-info .alias {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+      .clo-info .contact-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .clo-info .contact-row a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #fff;
+        transition: color 0.3s;
+      }
+      .clo-info .contact-row a:hover {
+        color: var(--kawasaki);
+      }
+      .clo-info .contact-row i {
+        color: var(--kawasaki);
+      }
+      .clo-actions {
+        display: flex;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ============ MEMBER CARD ============ */
+      .member-card-section {
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      }
+      .member-card {
+        width: min(500px, 100%);
+        margin: 0 auto;
+        aspect-ratio: 90/54;
+        background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+        border-radius: 16px;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+      .member-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(105, 190, 40, 0.2),
+          transparent 70%
+        );
+      }
+      .member-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--kawasaki),
+          var(--kawasaki-dark)
+        );
+      }
+      .mc-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+        z-index: 1;
+      }
+      .mc-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .mc-logo img {
+        width: 40px;
+        height: 40px;
+      }
+      .mc-logo .t {
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+      .mc-logo .s {
+        font-size: 9px;
+        color: var(--kawasaki);
+        letter-spacing: 2px;
+      }
+      .mc-status {
+        padding: 4px 10px;
+        border-radius: 4px;
+        background: var(--kawasaki);
+        color: #000;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+      .mc-name {
+        position: relative;
+        z-index: 1;
+        margin-top: 32px;
+      }
+      .mc-name .label {
+        font-size: 9px;
+        color: var(--gray);
+        letter-spacing: 2px;
+        margin-bottom: 4px;
+      }
+      .mc-name .val {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .mc-details {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .mc-details .item .label {
+        font-size: 9px;
+        color: var(--gray);
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+      }
+      .mc-details .item .val {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .mc-bottom {
+        position: absolute;
+        bottom: 20px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .mc-qr {
+        width: 50px;
+        height: 50px;
+        background: #fff;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mc-qr img {
+        width: 46px;
+        height: 46px;
+      }
+
+      /* ============ FORM ============ */
+      .form-section {
+        background: var(--dark-2);
+      }
+      .form-wrap {
+        max-width: 700px;
+        margin: 0 auto;
+        background: var(--dark-3);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-group.full {
+        grid-column: span 2;
+      }
+      .form-group label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gray);
+        letter-spacing: 0.5px;
+      }
+      .form-group input,
+      .form-group select {
+        padding: 14px 16px;
+        background: var(--dark);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--kawasaki);
+        box-shadow: 0 0 0 3px rgba(105, 190, 40, 0.1);
+      }
+      .package-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .package {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+      }
+      .package:hover {
+        border-color: var(--kawasaki);
+      }
+      .package.selected {
+        border-color: var(--kawasaki);
+        background: rgba(105, 190, 40, 0.05);
+      }
+      .package.selected::after {
+        content: "✓";
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        color: var(--kawasaki);
+        font-weight: 800;
+      }
+      .package h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .package .price {
+        color: var(--kawasaki);
+        font-weight: 800;
+        font-size: 18px;
+      }
+      .package .desc {
+        font-size: 11px;
+        color: var(--gray);
+        margin-top: 4px;
+      }
+      .btn-submit {
+        width: 100%;
+        padding: 16px;
+        margin-top: 20px;
+        background: var(--kawasaki);
+        color: #000;
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 1px;
+        border-radius: 10px;
+        transition: all 0.3s;
+      }
+      .btn-submit:hover {
+        background: #fff;
+        transform: translateY(-2px);
+      }
+
+      /* ============ FOOTER ============ */
+      footer {
+        background: #050505;
+        padding: 60px 24px 24px;
+        border-top: 1px solid var(--border);
+      }
+      .footer-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 40px;
+      }
+      .footer-brand img {
+        height: 60px;
+        margin-bottom: 16px;
+      }
+      .footer-brand p {
+        color: var(--gray);
+        font-size: 14px;
+        max-width: 320px;
+        margin-bottom: 16px;
+      }
+      .footer-brand .motto {
+        color: var(--kawasaki);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1px;
+      }
+      .footer-col h4 {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        color: #fff;
+      }
+      .footer-col a {
+        display: block;
+        color: var(--gray);
+        font-size: 14px;
+        padding: 6px 0;
+        transition: color 0.3s;
+      }
+      .footer-col a:hover {
+        color: var(--kawasaki);
+      }
+      .footer-bottom {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 12px;
+        color: var(--gray);
+      }
+      .footer-bottom .kawasaki-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .footer-bottom .kawasaki-brand img {
+        height: 24px;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 968px) {
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 10, 10, 0.98);
+          backdrop-filter: blur(20px);
+          flex-direction: column;
+          padding: 20px;
+          gap: 4px;
+          border-bottom: 1px solid var(--border);
+          transform: translateY(-120%);
+          visibility: hidden;
+          transition: transform 0.3s ease, visibility 0.3s ease;
+        }
+        .nav-links.open {
+          transform: translateY(0);
+          visibility: visible;
+        }
+        .nav-links a {
+          width: 100%;
+          padding: 14px;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .hero-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .hero-text .tagline {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-buttons {
+          justify-content: center;
+        }
+        .hero-visual {
+          order: -1;
+        }
+        .logo-ring {
+          width: min(320px, 80vw);
+        }
+        .hero-stats {
+          max-width: 400px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .bikes-grid {
+          grid-template-columns: 1fr;
+        }
+        .events-grid {
+          grid-template-columns: 1fr;
+        }
+        .gallery-cta-inner {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .gallery-cta-icon {
+          margin: 0 auto;
+        }
+        .gallery-cta-arrow {
+          margin: 0 auto;
+        }
+        .gallery-cta-tags {
+          justify-content: center;
+        }
+        .clo-card {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .clo-actions {
+          justify-content: center;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-group.full {
+          grid-column: span 1;
+        }
+        .package-options {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        section {
+          padding: 60px 20px;
+        }
+        .clo-card {
+          padding: 32px 24px;
+        }
+        .form-wrap {
+          padding: 24px;
+        }
+        .member-card {
+          padding: 16px;
+        }
+        .mc-name .val {
+          font-size: 16px;
+        }
+        .pillars {
+          grid-template-columns: 1fr;
+        }
+        .gallery-cta {
+          padding: 24px;
+        }
+        .gallery-cta-content h3 {
+          font-size: 18px;
+        }
+      }
+
+      /* ============ ANIMATIONS ============ */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+
